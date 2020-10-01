@@ -38,7 +38,7 @@ public class BookController {
 		return "booklist";
 	}
 	// RESTful service to get all books
-    @RequestMapping(value={"/","/books"}, method = RequestMethod.GET)
+    @RequestMapping(value="/books")
     public @ResponseBody List<Book> bookListRest() {	
         return (List<Book>) brepository.findAll();
     }
@@ -62,8 +62,8 @@ public class BookController {
         return "redirect:booklist";
     } 
   
-	 @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
-	 @PreAuthorize("hasRole('ADMIN')")
+	@PreAuthorize("hasAuthority('ADMIN')")
+	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
 	 public String deleteBook(@PathVariable("id") Long bookId, Model model) {
 	    	brepository.deleteById(bookId);
 	        return "redirect:../booklist";

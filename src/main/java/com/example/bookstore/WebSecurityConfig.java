@@ -1,6 +1,8 @@
 package com.example.bookstore;
 
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.context.annotation.Configuration;
@@ -14,11 +16,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.example.bookstore.web.UserDetailServiceImpl;
 
+
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-
+	
 	@Autowired
     private UserDetailServiceImpl userDetailsService;	
 	
@@ -28,14 +31,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         .authorizeRequests().antMatchers("/css/**").permitAll() // Enable css when logged out
         .and()
         .authorizeRequests()
-          .anyRequest().authenticated()
-          .and()
+        .anyRequest().authenticated()
+        .and()
       .formLogin()
-          .defaultSuccessUrl("/bookList")
+          .defaultSuccessUrl("/booklist")
           .permitAll()
           .and()
       .logout()
-          .permitAll();
+          .permitAll()
+          .invalidateHttpSession(true);
     }
 	
 	@Autowired

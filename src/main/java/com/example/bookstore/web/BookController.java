@@ -27,7 +27,7 @@ public class BookController {
 	@Autowired
 	private CategoryRepository crepository;
 	
-	@RequestMapping(value="/login")
+	@RequestMapping(value={"/","/login"})
     public String login() {	
         return "login";
     }
@@ -38,7 +38,7 @@ public class BookController {
 		return "booklist";
 	}
 	// RESTful service to get all books
-    @RequestMapping(value={"/","/books"})
+    @RequestMapping(value="/books")
     public @ResponseBody List<Book> bookListRest() {	
         return (List<Book>) brepository.findAll();
     }
